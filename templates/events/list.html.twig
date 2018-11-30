@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{parent()}} Liste {% endblock %}
+
+
+
+{% block body %}
+
+{% for event in events %}
+
+<div class="row">
+
+    <div class="col">
+
+       <article>
+
+            <div class="card" style="width: 22rem;">
+                <img class="card-img-top" src="../../assets/images/poster/{{ event.poster}}" alt="Card image cap">
+            </div>
+
+            <div class="card-body">
+                <h5 class="card-title">{{event.name}}</h5>
+                <p class="card-text">{{event.content}}</p>
+                <p>{{event.place.name}}</p>
+             <p class="card-text"> Créé le {{event.createdAt | date("m/d/Y") }} </p>
+                <hr>
+
+                 {% if date(event.startAt) <= date() and date(event.endAt) >= date() %}
+
+                    <p> en cours <img src="{{asset('assets/images/flags/flag_green.png/')}}" alt=""></p>
+
+                    {% elseif date(event.startAt) > date() %}
+
+                    <p> passé <img src="{{asset('assets/images/flags/flag_red.png/')}}" alt=""></p>
+
+                    {% else %}
+
+                    <p> futur <img src="{{asset('assets/images/flags/flag_orange.png/')}}" alt=""></p>
+
+                {% endif %}
+
+                    <h6> Début : {{event.startAt | date("m/d/Y")  }}</h6>
+                    <h6> Fin : {{event.endAt | date("m/d/Y")  }}</h6>
+                    <hr>
+                    <h6> PAF : {{event.price }} € </h6>
+                    <a class="btn btn-success" href="{{ path('events_display' , {'id': event.id}) }}"> Détails </a>
+            </div>  
+
+        </article>
+ 
+    </div>
+
+</div>
+
+{% endfor %}
+
+
+{% endblock %}
