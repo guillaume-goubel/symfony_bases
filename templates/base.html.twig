@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.15/css/mdb.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../public/assets/css/styles.css">
+    <link rel="stylesheet" href="{{asset('css/styles.css')}}">
 
     {% endblock %}
 
@@ -31,9 +31,6 @@
         {# Navigation #}
 
         <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a class="nav-link active" href="#">News !</a>
-            </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                     aria-expanded="false">Evènements</a>
@@ -41,15 +38,15 @@
                     <a class="dropdown-item" href="{{ path('events_list') }} "> Liste </a> 
                     <a class="dropdown-item" href="{{ path('events_create') }}"> Déposer </a>
                     <a class="dropdown-item" href="{{ path('events_go', {'id': 2}) }} "> Rejoindre </a>
+                    <a class="dropdown-item" href="{{ path('events_filtres', {'name' : 'toto'}) }} "> filtres </a>
+                    <a class="dropdown-item" href="{{ path('events_create') }} "> create </a>
                 </div>
             </li>
         </ul>
 
     </header>
 
-    <div class="container">
-        {% block body %}
-    </div>
+    {% block body %}
     {% endblock %}
 
 

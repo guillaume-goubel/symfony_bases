@@ -5,6 +5,8 @@ namespace App\Service;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Event;
 
+use App\Repository\EventRepository;
+
 class EventService {
 
     private $em;
@@ -82,6 +84,31 @@ class EventService {
         $repo = $this->em->getRepository(Event::class);
         return $repo->find($id);
     }
+
+
+    public function getByName(EventRepository $eventRepo) :array
+    {
+        $events = $this->em->getRepository(Event::class)
+        ->createQueryBuilder('m')
+        ->orderBy('m.name', 'ASC');
+
+        return $events->getQuery()->getResult();
+    }
+
+
+
+    public function countBydate($date) :string
+    {
+         $events = $this->em->getRepository(Event::class)
+         ->createQueryBuilder('m')
+         ->andWhere('m.startAt > :date')
+         ->setParameter(':date', $date)
+         ->select('count(m)');
+
+         return $events->getQuery()->getSingleScalarResult();
+    }
+
+
 
 }
 

@@ -7,48 +7,53 @@
 
 <div class="row">
 
-    <div class="col">
+    <article>
 
-       <article>
+        <div class="image-card">
+            <img src="../../assets/images/poster/{{ event.poster}}" alt="Card image cap">
+        </div>
 
-            <div class="card" style="width: 22rem;">
-                <img class="card-img-top" src="../../assets/images/poster/{{ event.poster}}" alt="Card image cap">
-            </div>
+        <div class="gauche1">
+            <h3>{{event.name}}</h3>
+            {{event.content}}
+        </div>
 
-            <div class="card-body">
-                <h5 class="card-title">{{event.name}}</h5>
-                <p class="card-text">{{event.content}}</p>
-                <p>{{event.place.name}}</p>
-             <p class="card-text"> Créé le {{event.createdAt | date("m/d/Y") }} </p>
-                <hr>
+        <div class="gauche2">
+            {{event.place.name}} <br>
+            Créé le {{event.createdAt | date("d/m/Y") }}
+        </div>
 
-                 {% if date(event.startAt) <= date() and date(event.endAt) >= date() %}
+        <div class="centre">
 
-                    <p> en cours <img src="{{asset('assets/images/flags/flag_green.png/')}}" alt=""></p>
+            {% if date(event.startAt) <= date() and date(event.endAt) >= date() %}
 
-                    {% elseif date(event.startAt) > date() %}
+                <p> en cours <img src="{{asset('assets/images/flags/flag_orange.png/')}}" alt=""></p>
 
-                    <p> passé <img src="{{asset('assets/images/flags/flag_red.png/')}}" alt=""></p>
+                {% elseif date(event.startAt) > date() %}
 
-                    {% else %}
+                <p> futur <img src="{{asset('assets/images/flags/flag_green.png/')}}" alt=""></p>
 
-                    <p> futur <img src="{{asset('assets/images/flags/flag_orange.png/')}}" alt=""></p>
+                {% else %}
+
+                <p> passé <img src="{{asset('assets/images/flags/flag_red.png/')}}" alt=""></p>
 
                 {% endif %}
+        </div>
 
-                    <h6> Début : {{event.startAt | date("m/d/Y")  }}</h6>
-                    <h6> Fin : {{event.endAt | date("m/d/Y")  }}</h6>
-                    <hr>
-                    <h6> PAF : {{event.price }} € </h6>
-            </div>  
+        <div>
+            Début : {{event.startAt | date("d/m/Y") }} <br>
+            Fin : {{event.endAt | date("d/m/Y") }} <br>
+            <hr>
+            PAF : {{event.price }} €
+        </div>
 
-        </article>
+        <div class="bouton">
+            <a class="btn btn-primary" href="{{ path('events_list') }} "> Liste </a>
+        </div>
 
-    </div>
+    </article>
 
 </div>
-
-
 
 
 {% endblock %}

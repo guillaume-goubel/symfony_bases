@@ -7,10 +7,13 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Service\EventService; 
 use Symfony\Component\HttpFoundation\Response;
 
+use App\Repository\EventRepository;
+
 class EventsController extends AbstractController
 {
     
     private $events;
+    
 
     /**
      * @Route("/events/create", name="events_create")
@@ -27,14 +30,17 @@ class EventsController extends AbstractController
      */
      public function list(EventService $eventService)
      {
-        
-         $this->events = $eventService->getAll();
+        $date = new \DateTime();
 
          return $this->render('events/list.html.twig', [
-             'events' => $this->events
+
+             'events' => $eventService->getAll(),
+             'futur_events' => $eventService->countBydate($date),
+             'date' => $date, 
          ]);
 
      }
+
 
     /**
      * @Route("/events/display/{id}", name="events_display", requirements={"id"="\d+"})
@@ -42,9 +48,11 @@ class EventsController extends AbstractController
     public function display(EventService $eventService, $id)
     {
         return $this->render('events/display.html.twig', [
+            
             'event' => $eventService->getOne($id)
         ]);
     }
+
 
     /**
      * @Route("/events/go/{id}", name="events_go", requirements={"id"="\d+"} )
@@ -55,6 +63,28 @@ class EventsController extends AbstractController
                 'id' => $id
          ]);
      }
+
+
+
+
+
+    /**
+     * @Route("/events/filtres/{name}", name="events_filtres" )
+     */
+    public function filtres(EventService $eventService)
+    {
+
+        $date = new \DateTime();
+        
+        return $this->render('events/filtres.html.twig' ,[
+
+            'events' => $eventService->getByName(),
+            'futur_events' => $eventService->countBydate($date),
+
+        ]); 
+
+    }
+
 
      
 
