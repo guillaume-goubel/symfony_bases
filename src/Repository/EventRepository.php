@@ -25,39 +25,48 @@ class EventRepository extends ServiceEntityRepository
     //  * @return Event[] Returns an array of Event objects
     //  */
 
-/*     public function getByName() :array
+ 
+     public function getByName(?string $name) 
     {
-        $events = $this->createQueryBuilder('m');
-        $events->orderBy('m.name', 'ASC');
-        return $events->getQuery()->getResult();
-    } */
+        return  $this->createQueryBuilder('m') 
+                ->andWhere('m.name LIKE :term') 
+                ->setParameter(':term',  '%' .$name .'%')
+                ->getQuery()
+                ->getResult();
+    }  
 
 
-    public function countBydate($date) :string
+    public function countBydate() :string
     {
-         $events = $this->createQueryBuilder('m')
-         ->andWhere('m.startAt > :date')
-         ->setParameter(':date', $date)
-         ->select('count(m)');
-
-         return $events->getQuery()->getSingleScalarResult();
+         return $this->createQueryBuilder('m')
+                ->select('count(m)')
+                ->andWhere('m.startAt > :date')
+                ->setParameter(':date', new \DateTime())
+                ->getQuery()
+                ->getSingleScalarResult();
     }
-     
 
-
-
-
-
-
-    /*
-    public function findOneBySomeField($value): ?Event
+    public function sortByPrice() 
     {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+        return  $this->createQueryBuilder('m') 
+                ->orderBy('m.price' , 'ASC')
+                ->getQuery()
+                ->getResult();
+    } 
+
+
+    public function sortByDate()
+    {
+        return  $this->createQueryBuilder('m') 
+                ->orderBy('m.startAt' , 'ASC')
+                ->getQuery()
+                ->getResult();
+    } 
+
 }
+
+
+//SYSTEME DE TRI 
+// Action sur les templates
+// Controller avec le service Request
+// On le passe au service -> qui le renvoie au repo

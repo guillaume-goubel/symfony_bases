@@ -6,17 +6,32 @@
 
 <div class="tri">
 
-    <p>En date du {{date | date("d/m/Y") }} : <strong>{{futur_events}} </strong> évènements sont programmés prochainement  </p>
+    <p>En date du {{date | date("d/m/Y") }} : <strong>{{futur_events}} </strong> évènements sont programmés
+        prochainement </p>
 
-    <select name="carlist" form="carform">
-        {% for event in events %}
-        <option value="volvo">{{event.name}}</option>
-        {% endfor %}
-    </select>
+    <form class="form-inline mt-2 mt-md-0" method="GET" action"{{ path('events_list') }}">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="events">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form> 
+    <br>
+
+    {# <a href="?sort=price">Trier par prix</a>
+    <a href="?sort=date">Trier par date</a> #}
+
+    <form class="form-inline mt-2 mt-md-0" method="GET" action"{{ path('events_list') }}">
+        <select name="sort" id="tri">
+            <option value=""></option>
+            <option value="OrderByprice-ASC"> Par prix (prix décroissant) </option>
+            <option value="OrderByDate-ASC"> Par date (plus récente) </option>
+        </select>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Trier</button>
+    </form> 
 
 </div>
 
 <div class="row">
+
+    {% if events|length > 0 %}
 
     {% for event in events %}
 
@@ -40,7 +55,7 @@
 
         <div class="centre">
 
-            {% if date(event.startAt) <= date() and date(event.endAt) >= date() %}
+            {% if date(event.startAt) <= date() and date(event.endAt)>= date() %}
 
                 <p> en cours <img src="{{asset('assets/images/flags/flag_orange.png/')}}" alt=""></p>
 
@@ -69,6 +84,20 @@
     </article>
 
     {% endfor %}
+
+    {% endif %}
+
+
+
+    {% if events|length == 0 %}
+
+    <div id="no-found" class="alert alert-danger" role="alert">
+        Pas de résultats !
+    </div>
+
+    {% endif %}
+
+
 
 </div>
 

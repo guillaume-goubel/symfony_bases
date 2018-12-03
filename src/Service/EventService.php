@@ -10,10 +10,12 @@ use App\Repository\EventRepository;
 class EventService {
 
     private $em;
+    private $repo;
 
-    public function __construct(ObjectManager $em){
+    public function __construct(ObjectManager $em, EventRepository $repo ){
 
         $this->em = $em;
+        $this->repo = $repo;
 
     }
 
@@ -59,13 +61,10 @@ class EventService {
         ]
     ]; */
 
-
     public function getAll(){
-
         $repo = $this->em->getRepository(Event::class);
-        return $repo->findAll();
+        return $this->repo->findAll();
     }
-
 
 /*     public function getOne($id){
         
@@ -80,34 +79,34 @@ class EventService {
     } */
 
     public function getOne ($id) {
-
-        $repo = $this->em->getRepository(Event::class);
+        $repo = $this->em->getRepository(Event::class); 
         return $repo->find($id);
     }
 
 
-    public function getByName(EventRepository $eventRepo) :array
+    public function getByName($name) 
     {
-        $events = $this->em->getRepository(Event::class)
-        ->createQueryBuilder('m')
-        ->orderBy('m.name', 'ASC');
-
-        return $events->getQuery()->getResult();
+        $repo = $this->em->getRepository(Event::class); 
+        return $repo->getByName($name);
     }
 
 
-
-    public function countBydate($date) :string
-    {
-         $events = $this->em->getRepository(Event::class)
-         ->createQueryBuilder('m')
-         ->andWhere('m.startAt > :date')
-         ->setParameter(':date', $date)
-         ->select('count(m)');
-
-         return $events->getQuery()->getSingleScalarResult();
+    public function countBydate() {
+         $repo = $this->em->getRepository(Event::class); 
+         return $repo->countBydate();
     }
 
+
+    public function sortByPrice() {
+        $repo = $this->em->getRepository(Event::class); 
+        return $repo->sortByPrice();
+   }
+
+
+   public function sortByDate() {
+    $repo = $this->em->getRepository(Event::class); 
+    return $repo->sortByDate();
+}
 
 
 }

@@ -70,7 +70,16 @@ article{
 
 .tri{
     width: 700px;
-    height: 100px;
+    height: 200px;
     margin-left: 37px;
     margin-top: 40px;
+}
+
+
+#no-found{
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 50px;
 }
