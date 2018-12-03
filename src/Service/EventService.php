@@ -3,18 +3,19 @@
 namespace App\Service;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use App\Repository\EventRepository;
+
 use App\Entity\Event;
 
-use App\Repository\EventRepository;
 
 class EventService {
 
-    private $em;
-    private $repo;
+    private $om;
+    private $repo; 
 
-    public function __construct(ObjectManager $em, EventRepository $repo ){
+    public function __construct(ObjectManager $om, EventRepository $repo ){
 
-        $this->em = $em;
+        $this->om = $om;
         $this->repo = $repo;
 
     }
@@ -62,7 +63,7 @@ class EventService {
     ]; */
 
     public function getAll(){
-        $repo = $this->em->getRepository(Event::class);
+        $repo = $this->om->getRepository(Event::class);
         return $this->repo->findAll();
     }
 
@@ -79,32 +80,32 @@ class EventService {
     } */
 
     public function getOne ($id) {
-        $repo = $this->em->getRepository(Event::class); 
+        $repo = $this->om->getRepository(Event::class); 
         return $repo->find($id);
     }
 
 
-    public function getByName($name) 
+    public function search($name, $sort) 
     {
-        $repo = $this->em->getRepository(Event::class); 
-        return $repo->getByName($name);
+        $repo = $this->om->getRepository(Event::class); 
+        return $repo->search($name, $sort);
     }
 
 
     public function countBydate() {
-         $repo = $this->em->getRepository(Event::class); 
+         $repo = $this->om->getRepository(Event::class); 
          return $repo->countBydate();
     }
 
 
     public function sortByPrice() {
-        $repo = $this->em->getRepository(Event::class); 
+        $repo = $this->om->getRepository(Event::class); 
         return $repo->sortByPrice();
    }
 
 
    public function sortByDate() {
-    $repo = $this->em->getRepository(Event::class); 
+    $repo = $this->om->getRepository(Event::class); 
     return $repo->sortByDate();
 }
 

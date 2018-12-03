@@ -24,14 +24,24 @@ class EventRepository extends ServiceEntityRepository
     //  */
 
  
-     public function getByName(?string $name) 
+     public function search(?string $name, $sort) 
     {
-        return  $this->createQueryBuilder('m') 
-                ->andWhere('m.name LIKE :term') 
-                ->setParameter(':term',  '%' .$name .'%')
-                ->getQuery()
+        $stmt = $this->createQueryBuilder('m') 
+                     ->andWhere('m.name LIKE :term') 
+                     ->setParameter(':term',  '%' .$name .'%');
+        
+        if  ($sort == "price"){
+            $stmt->orderBy('m.price' , 'ASC');
+
+        } else if($sort == "date"){
+
+            $stmt->orderBy('m.createdAt', 'DESC');
+        }
+                       
+        return $stmt->getQuery()
                 ->getResult();
     }  
+
 
     public function countBydate() :string
     {
@@ -43,6 +53,7 @@ class EventRepository extends ServiceEntityRepository
                 ->getSingleScalarResult();
     }
 
+    
     public function sortByPrice() 
     {
         return  $this->createQueryBuilder('m') 

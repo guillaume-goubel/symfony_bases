@@ -1,0 +1,82 @@
+
+Prerequis
+.............................
+1. Installer php7
+2. Installer composer
+
+
+
+Pour lancer un nouveau site  
+
+I PREPARATIFS
+...........................
+(cli) : 1. Cmder : composer create-project symfony/website-skeleton nomprojet (nomprojet est le nom du projet)
+tips : code . (pour executer via visual studio)
+(cli) : 2. composer require server --dev (pour installer un serveur que en mode developpement)
+(cli) : 3. php bin/console server:run (lancer le serveur php via le navigateur)
+
+
+
+
+II LANCER UN CONTROLER et faire son template (ide)
+............................
+(cli) :php bin/console make:controller --> choir le nom Camel Case avec le nom du controller type : fooController
+(ide) : faire le template en // en précisant la route 
+
+
+
+III METTRE BOOTSTRAP DANS LE projet
+..................................
+Mettre bootstrap dans le ficheir base .html.twig
+tips : utiliser placehold.it/350x150
+
+
+
+IV METTRE UN LIEN
+........................
+Dans un template avec des liens vers une page spécifique, mettre en interpolation la fonction {{path(lien)}}
+
+
+
+V Créer Bdd
+.....................
+
+BDD
+(ide) fichier .env -> DATABASE_URL=mysql://root:@127.0.0.1:3306/blog2  (blog2 -> nom du fichier)
+(cli) php bin/console doctrine:database:create
+
+TABLE
+(cli) php bin/console make:entity (créer une class entity)
+-- choisir les champs --
+
+(cli) php bin/console make:migration : créer la migration
+(cli) php bin/console doctrine:migrations:migrate : faire la migration
+
+
+VI Créer une fixture
+.......................
+(cli) composer require orm-fixtures --dev : demander à composer d'insatlelr des fixtures
+(cli) php bin/console make:fixtures
+(tip) utiliser faker : composer req --dev fzaninotto/faker (ne pas oublier de le déclarer dans le name space de la fixture)
+(ide) Dans mon fichier fictures , faire une boucle avec le parametrage de chaque setter -> ne pas oublier de lancer la methode manager -> persist + flush
+
+
+VII Lancer les fixtures dans la BDD
+..........................
+(cli) php bin/console doctrine:fixtures:load
+
+
+VIII Afficher les fixtures de ma base de données dans ma page d'accueil
+...........................
+Danas mon controller de la page voulue :
+(ide) créer une variable $repo et demander à Doctrine de me donner le résultat de la base de données :
+        $repo = $this->getDoctrine()->getRepository(Jeux::class);
+Tips : le repository sert à faire des requete vers la base de données, on peut lui demander par exemple d'afficher tous les articles avec la fonction find()...All , 
+voir les fonctions du repository...
+        $jeux_afficher = $repo->findAll()
+
+Aller dans le template correspondant et y mettre : {% item jeu in items %} et changer en twig {{item.title ou autre...}}, si date time mettre le filtre | date('d,m,Y') ou autre...
+
+
+TUTO :
+https://www.youtube.com/watch?v=UTusmVpwJXo
