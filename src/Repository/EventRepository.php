@@ -19,8 +19,6 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
-
-
     // /**
     //  * @return Event[] Returns an array of Event objects
     //  */
@@ -34,7 +32,6 @@ class EventRepository extends ServiceEntityRepository
                 ->getQuery()
                 ->getResult();
     }  
-
 
     public function countBydate() :string
     {
@@ -63,8 +60,8 @@ class EventRepository extends ServiceEntityRepository
                 ->getResult();
     } 
 
-}
 
+}
 
 //SYSTEME DE TRI 
 // Action sur les templates

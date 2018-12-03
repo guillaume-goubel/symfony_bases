@@ -28,7 +28,7 @@ class Participation
      * @ORM\Column(type="string", length=255)
      */
     private $bookingNumber;
-    
+
     public function getEvent(): ?Event
     {
         return $this->event;
