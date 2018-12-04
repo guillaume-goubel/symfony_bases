@@ -27,16 +27,23 @@
             </h1>
             <p class="lead">Créer vos événements en toute simplicité ! </p>
             <hr>
+
+            <form class="form-inline mt-2 mt-md-0" method="GET" action"{{ path('events_list') }}">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="events">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
         </div>
 
         {# Navigation #}
 
         <ul class="nav nav-tabs">
+
+
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                     aria-expanded="false">Evènements</a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="{{ path('events_list') }} "> Liste </a>
+                    <a class="dropdown-item" href="{{ path('events_list', {page:1}) }} "> Liste </a>
                     <a class="dropdown-item" href="{{ path('events_create') }}"> Déposer </a>
                 </div>
             </li>

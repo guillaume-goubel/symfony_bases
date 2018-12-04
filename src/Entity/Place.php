@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PlaceRepository")
  */
-class Place
+class Place 
 {
     /**
      * @ORM\Id()
@@ -118,6 +118,7 @@ class Place
         return $this;
     }
 
+    
     /**
      * @return Collection|Event[]
      */

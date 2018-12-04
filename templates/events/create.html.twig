@@ -1,6 +1,77 @@
-<h1>Events create</h1>
+{% extends 'base.html.twig' %}
 
+{% block title %} {{parent()}} Création {% endblock %}
 
+{% block body %}
 
+{% form_theme formType 'bootstrap_4_layout.html.twig' %}
 
- 
+    {{ form_start(formType, {'attr': {'novalidate': 'novalidate'}}) }}
+
+<div id="form-create">
+
+    <div class="gauche">
+
+        <div class="form-group">
+            {{ form_label(formType.name , 'Nom') }}
+            {{ form_errors(formType.name) }}
+            {{ form_widget(formType.name) }}
+            {{ form_help(formType.name) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(formType.startAt , 'Date de début') }}
+            {{ form_errors(formType.startAt) }}
+            {{ form_widget(formType.startAt) }}
+            {{ form_help(formType.startAt) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(formType.endAt , 'Date de fin') }}
+            {{ form_errors(formType.endAt) }}
+            {{ form_widget(formType.endAt) }}
+            {{ form_help(formType.endAt) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(formType.content , 'Description') }}
+            {{ form_errors(formType.content) }}
+            {{ form_widget(formType.content) }}
+            {{ form_help(formType.content) }}
+        </div>
+    </div>
+
+    <div class="droite">
+
+            <div class="form-group">
+                {{ form_label(formType.price , 'Prix') }}
+                {{ form_errors(formType.price) }}
+                {{ form_widget(formType.price) }}
+                {{ form_help(formType.price) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(formType.poster , 'Image') }}
+                {{ form_errors(formType.poster) }}
+                {{ form_widget(formType.poster) }}
+                {{ form_help(formType.poster) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(formType.place , 'Le lieu') }}
+                {{ form_errors(formType.place) }}
+                {{ form_widget(formType.place) }}
+                {{ form_help(formType.place) }}
+            </div> 
+{#              <div class="form-group">
+                {{ form_label(formType.categories , 'La catégorie') }}
+                {{ form_errors(formType.categories) }}
+                {{ form_widget(formType.categories) }}
+                {{ form_help(formType.categories) }}
+            </div>  #}
+            <input type="submit" class="btn btn-success" value="Create" />
+    </div>
+ </div>
+            {{ form_end(formType) }}
+
+       
+
+        {% endblock %}

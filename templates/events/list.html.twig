@@ -6,13 +6,33 @@
 
 <div class="tri">
 
+    <nav aria-label="...">
+        <ul class="pagination">
+        
+        {% if page > 1 %}
+            <li class="page-item ">
+                <a class="page-link" href="?page={{page -1}}">Précédent</a>
+            </li>    
+        {% endif %}
+
+        {% if page == 1 %}
+            <li class="page-item disabled ">
+                <a class="page-link" href="?page={{page -1}}">Précédent</a>
+            </li>    
+        {% endif %}
+                 
+             <li class="page-item ">
+                 <span class="page-link">{{page}}</span>
+            </li>
+
+            <li class="page-item">
+                <a class="page-link" href="?page={{page +1}}">Suivant</a>
+            </li>
+        </ul>
+    </nav>
+
     <p>En date du {{date | date("d/m/Y") }} : <strong>{{futur_events}} </strong> évènements sont programmés
         prochainement </p>
-
-    <form class="form-inline mt-2 mt-md-0" method="GET" action"{{ path('events_list') }}">
-        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="events">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form> 
     <br>
 
     {# <a href="?sort=price">Trier par prix</a>
@@ -25,7 +45,7 @@
             <option value="date"> Par date (plus récente) </option>
         </select>
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Trier</button>
-    </form> 
+    </form>
 
 </div>
 
@@ -88,7 +108,6 @@
     {% endif %}
 
 
-
     {% if events|length == 0 %}
 
     <div id="no-found" class="alert alert-danger" role="alert">
@@ -96,7 +115,6 @@
     </div>
 
     {% endif %}
-
 
 
 </div>

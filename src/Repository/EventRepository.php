@@ -24,7 +24,7 @@ class EventRepository extends ServiceEntityRepository
     //  */
 
  
-     public function search(?string $name, $sort) 
+     public function search(?string $name, $sort, $page) 
     {
         $stmt = $this->createQueryBuilder('m') 
                      ->andWhere('m.name LIKE :term') 
@@ -37,8 +37,13 @@ class EventRepository extends ServiceEntityRepository
 
             $stmt->orderBy('m.createdAt', 'DESC');
         }
-                       
-        return $stmt->getQuery()
+        
+        $limit = 3;
+        $stmt->setMaxResults($limit);
+        $stmt->setFirstResult(($page-1) * $limit);
+
+        return $stmt
+                ->getQuery()
                 ->getResult();
     }  
 

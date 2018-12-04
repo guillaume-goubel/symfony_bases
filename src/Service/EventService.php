@@ -20,6 +20,57 @@ class EventService {
 
     }
 
+    public function getAll(){
+        $repo = $this->om->getRepository(Event::class);
+        return $this->repo->findAll();
+    }
+
+/*     public function getOne($id){
+        
+        foreach ($this->events as $key => $event) {
+            
+            if ($event['id'] == $id){
+                return $event;
+            } 
+                
+        }
+        return null;
+    } */
+
+    public function getOne ($id) {
+        $repo = $this->om->getRepository(Event::class); 
+        return $repo->find($id);
+    }
+
+
+    public function search($name, $sort, $page) 
+    {
+        $repo = $this->om->getRepository(Event::class); 
+        return $repo->search($name, $sort, $page);
+    }
+
+
+    public function countBydate() {
+         $repo = $this->om->getRepository(Event::class); 
+         return $repo->countBydate();
+    }
+
+
+    public function sortByPrice() {
+        $repo = $this->om->getRepository(Event::class); 
+        return $repo->sortByPrice();
+   }
+
+
+   public function sortByDate() {
+    $repo = $this->om->getRepository(Event::class); 
+    return $repo->sortByDate();
+}
+
+
+}
+
+
 /*      public $events = [ 
 
         [ 
@@ -61,54 +112,3 @@ class EventService {
             ]
         ]
     ]; */
-
-    public function getAll(){
-        $repo = $this->om->getRepository(Event::class);
-        return $this->repo->findAll();
-    }
-
-/*     public function getOne($id){
-        
-        foreach ($this->events as $key => $event) {
-            
-            if ($event['id'] == $id){
-                return $event;
-            } 
-                
-        }
-        return null;
-    } */
-
-    public function getOne ($id) {
-        $repo = $this->om->getRepository(Event::class); 
-        return $repo->find($id);
-    }
-
-
-    public function search($name, $sort) 
-    {
-        $repo = $this->om->getRepository(Event::class); 
-        return $repo->search($name, $sort);
-    }
-
-
-    public function countBydate() {
-         $repo = $this->om->getRepository(Event::class); 
-         return $repo->countBydate();
-    }
-
-
-    public function sortByPrice() {
-        $repo = $this->om->getRepository(Event::class); 
-        return $repo->sortByPrice();
-   }
-
-
-   public function sortByDate() {
-    $repo = $this->om->getRepository(Event::class); 
-    return $repo->sortByDate();
-}
-
-
-}
-
