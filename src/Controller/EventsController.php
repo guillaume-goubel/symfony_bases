@@ -58,9 +58,9 @@ class EventsController extends AbstractController
 
 
     /**
-     * @Route("/events/create", name="events_create")
+     * @Route("/events/add", name="events_create")
      */
-     public function create(EventService $eventService, Request $request)
+     public function add(EventService $eventService, Request $request)
      {
          $event = new Event();
          $formType = $this->createForm(FormType::class, $event);
@@ -70,7 +70,7 @@ class EventsController extends AbstractController
              $eventService->add($event);
          }
  
-          return $this->render('events/create.html.twig', [
+          return $this->render('events/add.html.twig', [
              'formType' => $formType->createView(),
          ]); 
      }
