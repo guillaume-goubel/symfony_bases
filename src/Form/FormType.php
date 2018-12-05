@@ -32,17 +32,17 @@ class FormType extends AbstractType
             
             ->add('createdAt', DateTimeType::class ,
             array(
-                'widget' => 'single_text'
+                'date_widget' => 'single_text'
             )) 
 
             ->add('startAt' , DateTimeType::class,
             array(
-                'widget' => 'single_text'
+                'date_widget' => 'single_text'
             ))
             
             ->add('endAt', DateTimeType::class,
             array(
-                'widget' => 'single_text'
+                'date_widget' => 'single_text'
             ))
 
             ->add('content')
@@ -53,11 +53,11 @@ class FormType extends AbstractType
                   'choice_label' => 'name'
                   )) 
 
-             ->add('categories', EntityType::class ,array( 
+             ->add('categories', null ,array( 
                   'class' => Category::class,
                   'choice_label' => 'name',
-                  'expanded'  => true,
-                  'multiple'  => true
+/*                   'expanded'  => true,
+                  'multiple'  => true */
                   ))
              
              ->add('owner', EntityType::class ,array( 

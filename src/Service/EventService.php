@@ -6,7 +6,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use App\Repository\EventRepository;
 
 use App\Entity\Event;
-
+use App\Entity\User;
 
 class EventService {
 
@@ -42,44 +42,48 @@ class EventService {
         return $repo->find($id);
     }
 
-
     public function getOneUser ($id) {
         $repo = $this->om->getRepository(User::class); 
         return $repo->find($id);
     }
-
-
-
-
 
     public function search($name, $sort, $page) {
         $repo = $this->om->getRepository(Event::class); 
         return $repo->search($name, $sort, $page);
     }
 
-
-
-
-
-
     public function countBydate() {
          $repo = $this->om->getRepository(Event::class); 
          return $repo->countBydate();
     }
 
-
-    
-
     public function sortByPrice() {
         $repo = $this->om->getRepository(Event::class); 
         return $repo->sortByPrice();
-   }
+    }
 
+    public function sortByDate() {
+        $repo = $this->om->getRepository(Event::class); 
+        return $repo->sortByDate();
+    }
 
-   public function sortByDate() {
-    $repo = $this->om->getRepository(Event::class); 
-    return $repo->sortByDate();
-}
+    public function add($event) {
+    
+        // Gestion des owner effectuée dans le service (l'Id sera toujours 1 en base)
+        $repo = $this->om->getRepository(User::class); 
+        $user = $repo->find(1);
+        $event->setOwner($user);
+
+        // Faire persister et flusher
+        $this->om->persist($event);
+        $this->om->flush();
+
+        //Les étapes dans le controller en dessous :
+        //  $em = $this->getDoctrine()->getManager();
+        //  $em->persist($event);
+        //$em->flush(); 
+
+    }
 
 
 }

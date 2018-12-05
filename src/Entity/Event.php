@@ -73,6 +73,8 @@ class Event
      * @Assert\NotBlank(
      * message = "Merci de renseigner ce champ !"   
      * )
+     * @Assert\Type(type = "float")
+     * @Assert\GreaterThan(0) 
      * @ORM\Column(type="float", nullable=true)
      */
     private $price;
@@ -132,7 +134,9 @@ class Event
         $this->categories = new ArrayCollection();
         $this->participations = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        
         $this->createdAt = new \DateTime();
+        
         $this->startAt = new \DateTime();
         $this->endAt = new \DateTime();
         

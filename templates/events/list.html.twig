@@ -8,21 +8,17 @@
 
     <nav aria-label="...">
         <ul class="pagination">
-        
-        {% if page > 1 %}
-            <li class="page-item ">
-                <a class="page-link" href="?page={{page -1}}">Précédent</a>
-            </li>    
-        {% endif %}
 
-        {% if page == 1 %}
-            <li class="page-item disabled ">
+            {% if page > 1 %}
+                 <li class="page-item ">
+            {% elseif page == 1 %}
+                <li class="page-item disabled ">
+            {% endif %}
                 <a class="page-link" href="?page={{page -1}}">Précédent</a>
-            </li>    
-        {% endif %}
-                 
-             <li class="page-item ">
-                 <span class="page-link">{{page}}</span>
+            </li>
+     
+            <li class="page-item ">
+                <span class="page-link">{{page}}</span>
             </li>
 
             <li class="page-item">
@@ -35,17 +31,23 @@
         prochainement </p>
     <br>
 
-    {# <a href="?sort=price">Trier par prix</a>
-    <a href="?sort=date">Trier par date</a> #}
+    <form id="search" class="form-inline mt-2 mt-md-0" method="GET" action"{{ path('events_list') }}">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="events">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
 
-    <form class="form-inline mt-2 mt-md-0" method="GET" action"{{ path('events_list') }}">
+    <br>
+    <hr>
+
+    <form id="sort" class="form-inline mt-2 mt-md-0" method="GET" action"{{ path('events_list') }}">
         <select name="sort" id="tri">
             <option value=""></option>
-            <option value="price"> Par prix (prix décroissant) </option>
-            <option value="date"> Par date (plus récente) </option>
+            <option value="price"> Par prix croissant </option>
+            <option value="date"> Par date récente </option>
         </select>
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Trier</button>
     </form>
+    <br>
 
 </div>
 

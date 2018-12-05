@@ -4,6 +4,10 @@
 
 {% block body %}
 
+<pre>
+    {{ dump(formType) }}
+</pre>
+
 {% form_theme formType 'bootstrap_4_layout.html.twig' %}
 
     {{ form_start(formType, {'attr': {'novalidate': 'novalidate'}}) }}

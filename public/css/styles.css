@@ -73,7 +73,7 @@ article{
     height: 200px;
     margin-left: 37px;
     margin-top: 40px;
-    margin-bottom: 50px;
+    margin-bottom: 100px;
 }
 
 
@@ -110,11 +110,8 @@ article{
  
 }
 
-#alert h2{   
-    display: flex;
-    justify-content: center;
-    align-items: center; 
-   }
+#sort{
+    margin-bottom: 300px;
+}
 
 
-   
