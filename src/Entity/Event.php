@@ -4,7 +4,10 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+
 use Doctrine\ORM\Mapping as ORM;
+
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
@@ -19,63 +22,107 @@ class Event
     private $id;
 
     /**
+     * @Assert\NotBlank(
+     * message = "Merci de renseigner ce champ !"   
+     * )
+     * @Assert\Length(
+     *   min = 3,
+     *   minMessage = "Le nom doit avoir au minimum {{ limit }} caractères",   
+     * )
      * @ORM\Column(type="string", length=255)
      */
     private $name;
 
     /**
+     * @Assert\NotBlank(
+     * message = "Merci de renseigner ce champ !"   
+     * )
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
     /**
+     * @Assert\DateTime() 
+     * @Assert\NotBlank(
+     * message = "Merci de renseigner ce champ !"   
+     * )
      * @ORM\Column(type="datetime")
      */
     private $startAt;
 
     /**
+     * @Assert\DateTime()
+     * @Assert\GreaterThan(propertyPath="startAt")
+     *
+     * @Assert\NotBlank(
+     * message = "Merci de renseigner ce champ !"   
+     * )
      * @ORM\Column(type="datetime")
      */
     private $endAt;
 
     /**
+     * @Assert\NotBlank(
+     * message = "Merci de renseigner ce champ !"   
+     * )
      * @ORM\Column(type="text")
      */
     private $content;
 
     /**
+     * @Assert\NotBlank(
+     * message = "Merci de renseigner ce champ !"   
+     * )
      * @ORM\Column(type="float", nullable=true)
      */
     private $price;
 
     /**
+     * @Assert\NotBlank(
+     * message = "Merci de renseigner ce champ !"   
+     * )
      * @ORM\Column(type="string", length=255)
      */
     private $poster;
 
     /**
+     * @Assert\NotBlank(
+     * message = "Merci de renseigner ce champ !"   
+     * )
      * @ORM\ManyToOne(targetEntity="App\Entity\Place", inversedBy="events")
      * @ORM\JoinColumn(nullable=false)
      */
     private $place;
 
     /**
+     * @Assert\NotBlank(
+     * message = "Merci de renseigner ce champ !"   
+     * )
      * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="events")
      */
     private $categories;
 
     /**
+     * @Assert\NotBlank(
+     * message = "Merci de renseigner ce champ !"   
+     * )
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="events")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $owner;
 
     /**
+     * @Assert\NotBlank(
+     * message = "Merci de renseigner ce champ !"   
+     * )
      * @ORM\OneToMany(targetEntity="App\Entity\Participation", mappedBy="event", orphanRemoval=true)
      */
     private $participations;
 
     /**
+     * @Assert\NotBlank(
+     * message = "Merci de renseigner ce champ !"   
+     * )
      * @ORM\OneToMany(targetEntity="App\Entity\Comments", mappedBy="event")
      */
     private $comments;
@@ -85,6 +132,15 @@ class Event
         $this->categories = new ArrayCollection();
         $this->participations = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->createdAt = new \DateTime();
+        $this->startAt = new \DateTime();
+        $this->endAt = new \DateTime();
+        
+        $this->name = 'yoyo';
+        $this->price = '10';
+        $this->content = 'yo';
+        $this->poster = 'yo';
+
     }
 
     public function getId(): ?int
@@ -109,7 +165,7 @@ class Event
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreatedAt(? \DateTimeInterface $createdAt): self 
     {
         $this->createdAt = $createdAt;
 
@@ -121,7 +177,7 @@ class Event
         return $this->startAt;
     }
 
-    public function setStartAt(\DateTimeInterface $startAt): self
+    public function setStartAt(? \DateTimeInterface $startAt): self
     {
         $this->startAt = $startAt;
 
@@ -133,7 +189,7 @@ class Event
         return $this->endAt;
     }
 
-    public function setEndAt(\DateTimeInterface $endAt): self
+    public function setEndAt(? \DateTimeInterface $endAt): self
     {
         $this->endAt = $endAt;
 

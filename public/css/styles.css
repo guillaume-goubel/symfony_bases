@@ -94,7 +94,27 @@ article{
 
     display: flex;
     justify-content: space-between;
-
-    
-
 }
+
+
+#alert{
+ width: 500px;
+ 
+ display: flex;
+ justify-content: center;
+ align-items: center;
+
+ position: absolute;
+ right: 250px;
+ top:35px;
+ 
+}
+
+#alert h2{   
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+   }
+
+
+   

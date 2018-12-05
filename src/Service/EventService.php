@@ -43,11 +43,23 @@ class EventService {
     }
 
 
-    public function search($name, $sort, $page) 
-    {
+    public function getOneUser ($id) {
+        $repo = $this->om->getRepository(User::class); 
+        return $repo->find($id);
+    }
+
+
+
+
+
+    public function search($name, $sort, $page) {
         $repo = $this->om->getRepository(Event::class); 
         return $repo->search($name, $sort, $page);
     }
+
+
+
+
 
 
     public function countBydate() {
@@ -55,6 +67,8 @@ class EventService {
          return $repo->countBydate();
     }
 
+
+    
 
     public function sortByPrice() {
         $repo = $this->om->getRepository(Event::class); 

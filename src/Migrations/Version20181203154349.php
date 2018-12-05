@@ -20,6 +20,7 @@ final class Version20181203154349 extends AbstractMigration
         $this->addSql('ALTER TABLE comments ADD CONSTRAINT FK_5F9E962A71F7E88B FOREIGN KEY (event_id) REFERENCES event (id)');
     }
 
+
     public function down(Schema $schema) : void
     {
         // this down() migration is auto-generated, please modify it to your needs

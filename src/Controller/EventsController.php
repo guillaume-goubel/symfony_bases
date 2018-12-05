@@ -4,8 +4,8 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\Event;
 
+use App\Entity\Event;
 use App\Service\EventService; 
 
 use Symfony\Component\HttpFoundation\Response;
@@ -23,34 +23,43 @@ class EventsController extends AbstractController
 {
     
     private $events;
-
-    
+ 
     /**
      * @Route("/events/create", name="events_create")
      */
-    public function create()
+    public function create(Request $request)
     {
 
         $event= new Event();
         $formType = $this->createForm(FormType::class, $event);
-
-        $request = Request::createFromGlobals();
-
         $formType->handleRequest($request);
 
-        if ($formType->isSubmitted() && $formType->isValid()) {
-            $data = $formType->getData();
+        if ($formType->isSubmitted() && $formType->isValid()) {   
+            // La date de création  de l'èvenement est créée directement dans le constructeur de l'entité Event -> CreatedAt
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($event);
+            $em->flush(); 
 
-            var_dump($data);
+            // Message flash qui apparait sur la page d'accueil
+            $this->addFlash(
+                'notice',
+                'Votre évenement ' .$event->getName() .' a été ajouté avec succès!'
+            );
+
+            // redirection vers la page d'accueil
+            return $this->redirectToRoute('events_list');
+
         }
 
          return $this->render('events/create.html.twig', [
-
             'formType' => $formType->createView(),
-            'request' => $request
-
         ]); 
     }
+
+
+
+
+
 
 
     /**
@@ -70,7 +79,7 @@ class EventsController extends AbstractController
         }
 
             return $this->render('events/list.html.twig', [
-                'events' => $eventService->search($querySearch,$querySort, $page),
+                'events' => $eventService->search($querySearch, $querySort, $page),
                 /* 'events' => $eventService->getAll(),  */
                 'futur_events' => $eventService->countBydate(),
                 'date' => $date, 
@@ -78,6 +87,14 @@ class EventsController extends AbstractController
             ]);
      }
 
+
+
+
+
+
+
+
+     
     /**
      * @Route("/events/display/{id}", name="events_display", requirements={"id"="\d+"})
      */

@@ -23,57 +23,69 @@ class EventRepository extends ServiceEntityRepository
     //  * @return Event[] Returns an array of Event objects
     //  */
 
- 
      public function search(?string $name, $sort, $page) 
     {
-        $stmt = $this->createQueryBuilder('m') 
-                     ->andWhere('m.name LIKE :term') 
+
+        //Système de Barre de recherche
+        $stmt = $this->createQueryBuilder('event') 
+                     ->andWhere('event.name LIKE :term') 
                      ->setParameter(':term',  '%' .$name .'%');
-        
-        if  ($sort == "price"){
-            $stmt->orderBy('m.price' , 'ASC');
+    
+        //Système de tri
+        if ($sort == "price"){
+            $stmt->orderBy('event.price' , 'ASC');
 
         } else if($sort == "date"){
-
-            $stmt->orderBy('m.createdAt', 'DESC');
+            $stmt->orderBy('event.createdAt', 'DESC');
         }
-        
-        $limit = 3;
+    
+        //Système de pagination
+        $limit = 4;
         $stmt->setMaxResults($limit);
         $stmt->setFirstResult(($page-1) * $limit);
 
-        return $stmt
-                ->getQuery()
-                ->getResult();
+        //RESULTAT
+        return $stmt->getQuery()->getResult();
+                
     }  
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     public function countBydate() :string
     {
          return $this->createQueryBuilder('m')
-                ->select('count(m)')
-                ->andWhere('m.startAt > :date')
-                ->setParameter(':date', new \DateTime())
-                ->getQuery()
-                ->getSingleScalarResult();
+                     ->select('count(m)')
+                     ->andWhere('m.startAt > :date')
+                     ->setParameter(':date', new \DateTime())
+                     ->getQuery()
+                     ->getSingleScalarResult();
     }
 
-    
     public function sortByPrice() 
     {
         return  $this->createQueryBuilder('m') 
-                ->orderBy('m.price' , 'ASC')
-                ->getQuery()
-                ->getResult();
+                     ->orderBy('m.price' , 'ASC')
+                     ->getQuery()
+                     ->getResult();
     } 
-
 
     public function sortByDate()
     {
         return  $this->createQueryBuilder('m') 
-                ->orderBy('m.startAt' , 'ASC')
-                ->getQuery()
-                ->getResult();
+                     ->orderBy('m.startAt' , 'ASC')
+                     ->getQuery()
+                     ->getResult();
     } 
 
 
