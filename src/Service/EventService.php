@@ -38,11 +38,6 @@ class EventService {
         return $repo->find($id);
     }
 
-    public function getOneUser ($id) {
-        $repo = $this->om->getRepository(User::class); 
-        return $repo->find($id);
-    }
-
     public function search($name, $sort, $page) {
         $repo = $this->om->getRepository(Event::class); 
         return $repo->search($name, $sort, $page);

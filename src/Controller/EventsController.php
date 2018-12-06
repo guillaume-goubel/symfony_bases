@@ -19,6 +19,7 @@ use App\Form\FormType;
 use Doctrine\Common\Persistence\ObjectManager;
 
 
+
 class EventsController extends AbstractController
 {
     
@@ -59,7 +60,7 @@ class EventsController extends AbstractController
     /**
      * @Route("/events/add", name="events_create")
      */
-     public function add(EventService $eventService, Request $request)
+     public function create(EventService $eventService, Request $request)
      {
          $event = new Event();
          $formType = $this->createForm(FormType::class, $event);
@@ -70,10 +71,11 @@ class EventsController extends AbstractController
              return $this->redirectToRoute('events_display', [ 'id' => $event->getId() ]);
          }
  
-          return $this->render('events/add.html.twig', [
+          return $this->render('events/create.html.twig', [
              'formType' => $formType->createView(),
          ]); 
      }
+ 
 
 
     /**
@@ -82,7 +84,6 @@ class EventsController extends AbstractController
      public function list(EventService $eventService, Request $request)
      {
         $date = new \DateTime();
-        $page = 1;
 
         $querySearch = $request->query->get('events');
         $querySort = $request->query->get('sort');
