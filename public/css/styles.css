@@ -115,3 +115,12 @@ article{
 }
 
 
+#form-user{
+    width: 500px;
+    height: 800px;
+
+    margin-left: 800px;
+
+    display: flex;
+    justify-content: space-between;
+}

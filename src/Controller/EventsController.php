@@ -74,7 +74,7 @@ class EventsController extends AbstractController
              'formType' => $formType->createView(),
          ]); 
      }
- 
+
 
     /**
      * @Route("/events/list", name="events_list" )

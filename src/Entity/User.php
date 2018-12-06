@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User implements UserInterface, \Serializable
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -34,6 +34,9 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="string", length=255)
      */
     private $password;
+
+    
+    public $confirm_password;
 
     /**
      * @ORM\Column(type="array")
@@ -207,5 +210,13 @@ class User implements UserInterface, \Serializable
 
         return $this;
     }
+
+    
+    public function eraseCredentials(){}
+    
+    public function getSalt () : ?string {
+            return null;
+        } 
+    
 
 }
