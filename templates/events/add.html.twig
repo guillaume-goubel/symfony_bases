@@ -4,10 +4,6 @@
 
 {% block body %}
 
-<pre>
-    {{ dump(formType) }}
-</pre>
-
 {% form_theme formType 'bootstrap_4_layout.html.twig' %}
 
     {{ form_start(formType, {'attr': {'novalidate': 'novalidate'}}) }}
@@ -55,15 +51,22 @@
             {{ form_help(formType.price) }}
         </div>
         <div class="form-group">
-            {{ form_label(formType.poster , 'Image') }}
-            {{ form_widget(formType.poster) }}
-            {{ form_help(formType.poster) }}
-        </div>
-        <div class="form-group">
             {{ form_label(formType.place , 'Le lieu') }}
             {{ form_widget(formType.place) }}
             {{ form_help(formType.place) }}
         </div> 
+        <div class="form-group">
+            {{ form_label(formType.posterUrl , "L'Url de l'image") }}
+            {{ form_widget(formType.posterUrl) }}
+            {{ form_help(formType.posterUrl) }}
+        </div> 
+
+        <div class="form-group">
+            {{ form_label(formType.posterFile , "L'upload de l'image") }}
+            {{ form_widget(formType.posterFile) }}
+            {{ form_help(formType.posterFile) }}
+        </div> 
+
         <div class="form-group">
             {{ form_label(formType.categories , 'La catégorie') }}
             {{ form_widget(formType.categories) }}

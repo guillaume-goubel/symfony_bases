@@ -11,13 +11,9 @@ use App\Entity\User;
 class EventService {
 
     private $om;
-    private $repo; 
 
     public function __construct(ObjectManager $om, EventRepository $repo ){
-
         $this->om = $om;
-        $this->repo = $repo;
-
     }
 
     public function getAll(){
@@ -72,7 +68,10 @@ class EventService {
         // Gestion des owner effectuée dans le service (l'Id sera toujours 1 en base)
         $repo = $this->om->getRepository(User::class); 
         $user = $repo->find(1);
+        
         $event->setOwner($user);
+
+        $this->setupMedia( $event );
 
         // Faire persister et flusher
         $this->om->persist($event);
@@ -82,9 +81,21 @@ class EventService {
         //  $em = $this->getDoctrine()->getManager();
         //  $em->persist($event);
         //$em->flush(); 
-
     }
 
+    private function setupMedia($event){
+        
+        if( !empty( $event->getPosterUrl() ) ){
+            return $event->setPoster( $event->getPosterUrl() );
+        }
+
+        $file = $event->getPosterFile();
+        $filename = md5( uniqid() ) . '.' . $file->guessExtension();
+        $file->move( './assets/images/poster/', $filename );
+        
+        return $event->setPoster( $filename );
+
+    }
 
 }
 

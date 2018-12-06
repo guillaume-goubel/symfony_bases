@@ -2,23 +2,19 @@
 
 namespace App\Form;
 
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 use App\Entity\Event;
 use App\Entity\User;
-
 use App\Entity\Place;
 use App\Entity\Category;
-
 use App\Entity\Participation;
 
 
@@ -32,32 +28,33 @@ class FormType extends AbstractType
             
             ->add('createdAt', DateTimeType::class ,
             array(
-                'date_widget' => 'single_text'
+                'widget' => 'single_text'
             )) 
 
             ->add('startAt' , DateTimeType::class,
             array(
-                'date_widget' => 'single_text'
+                'widget' => 'single_text'
             ))
             
             ->add('endAt', DateTimeType::class,
             array(
-                'date_widget' => 'single_text'
+                'widget' => 'single_text'
             ))
 
             ->add('content')
             ->add('price')
-            ->add('poster')
+            ->add('posterUrl')
+            ->add('posterFile', FileType::class)
             ->add('place', EntityType::class ,array( 
                   'class' => Place::class,
                   'choice_label' => 'name'
                   )) 
 
-             ->add('categories', null ,array( 
+             ->add('categories', EntityType::class ,array( 
                   'class' => Category::class,
                   'choice_label' => 'name',
-/*                   'expanded'  => true,
-                  'multiple'  => true */
+                  'expanded'  => true,
+                  'multiple'  => true
                   ))
              
              ->add('owner', EntityType::class ,array( 

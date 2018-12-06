@@ -56,11 +56,10 @@ class EventsController extends AbstractController
     // }
 
 
-
     /**
-     * @Route("/events/create", name="events_create")
+     * @Route("/events/add", name="events_create")
      */
-     public function create(EventService $eventService, Request $request)
+     public function add(EventService $eventService, Request $request)
      {
          $event = new Event();
          $formType = $this->createForm(FormType::class, $event);
@@ -68,17 +67,14 @@ class EventsController extends AbstractController
  
          if ($formType->isSubmitted() && $formType->isValid()) {    
              $eventService->add($event);
+             return $this->redirectToRoute('events_display', [ 'id' => $event->getId() ]);
          }
  
-          return $this->render('events/create.html.twig', [
+          return $this->render('events/add.html.twig', [
              'formType' => $formType->createView(),
          ]); 
      }
  
-
-
-
-
 
     /**
      * @Route("/events/list", name="events_list" )

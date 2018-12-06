@@ -80,12 +80,26 @@ class Event
     private $price;
 
     /**
-     * @Assert\NotBlank(
      * message = "Merci de renseigner ce champ !"   
      * )
      * @ORM\Column(type="string", length=255)
      */
     private $poster;
+
+    /**
+     * @Assert\Url
+     * @Assert\Expression(
+     *     "this.getPosterUrl() or this.getPosterFile()",
+     *     message="Vous devez saisir une URL ou charger une image"
+     * )
+     */
+     private $posterUrl;
+
+     /**
+      * @Assert\Image( maxSize = "2048k" )
+      */
+     private $posterFile;
+
 
     /**
      * @Assert\NotBlank(
@@ -97,9 +111,6 @@ class Event
     private $place;
 
     /**
-     * @Assert\NotBlank(
-     * message = "Merci de renseigner ce champ !"   
-     * )
      * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="events")
      */
     private $categories;
@@ -121,9 +132,7 @@ class Event
      */
     private $participations;
 
-    /**
-     * @Assert\NotBlank(
-     * message = "Merci de renseigner ce champ !"   
+    /**  
      * )
      * @ORM\OneToMany(targetEntity="App\Entity\Comments", mappedBy="event")
      */
@@ -235,6 +244,40 @@ class Event
 
         return $this;
     }
+
+    public function getPosterUrl(): ?string
+    {
+        return $this->posterUrl;
+    }
+
+    public function setPosterUrl(string $poster): self
+    {
+        $this->posterUrl = $poster;
+
+        return $this;
+    }
+
+    public function getPosterFile()
+    {
+        return $this->posterFile;
+    }
+
+    public function setPosterFile($poster): self
+    {
+        $this->posterFile = $poster;
+
+        return $this;
+    }
+
+
+
+
+
+
+
+
+
+
 
     public function getPlace(): ?Place
     {
