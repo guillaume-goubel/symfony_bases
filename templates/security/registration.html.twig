@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{parent()}} Registration {% endblock %}
+
+{% block body %}
+
+<h1>Enregistrement</h1>
+
+<div id="form-user">
+
+    {% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+    {{ form_row(form.username, {'attr' :{
+    'placeholder': 'Name'}})
+    }}
+    {{ form_row(form.email, {'attr' :{
+    'placeholder': 'Email'}})
+    }}
+    {{ form_row(form.password, {'attr' :{
+    'placeholder': 'Password'}})
+    }}
+    {{ form_row(form.confirm_password, {'attr' :{
+    'placeholder': 'Confirm Password'}})
+    }}
+    <button type="submit" class="btn btn-success"> S'inscrire </button>
+
+    {{ form_end(form) }}
+</div>
+
+{% endblock %}

@@ -8,8 +8,15 @@ use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(
+ *  fields = {"email"},
+ *  message = "L'Email que vous avez choisi est déja utilisé !"
+ *  )
  */
 class User implements UserInterface
 {
@@ -21,21 +28,38 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @Assert\NotBlank(
+     * message = "Merci de renseigner ce champ !"   
+     * )
      * @ORM\Column(type="string", length=255)
      */
     private $username;
 
     /**
+     * @Assert\Email(
+     * message ="Merci de renseigner un Email valide"   
+     * )
+     * @Assert\NotBlank(
+     * message = "Merci de renseigner ce champ !"   
+     * )
      * @ORM\Column(type="string", length=255)
      */
     private $email;
 
     /**
+     * @Assert\NotBlank(
+     * message = "Merci de renseigner ce champ !"   
+     * )
      * @ORM\Column(type="string", length=255)
      */
     private $password;
 
-    
+
+    private $plainPassword;
+
+     /**
+     * @Assert\EqualTo(propertyPath="password" , message="Le password n'est pas confirmé")
+     */
     public $confirm_password;
 
     /**
@@ -63,6 +87,8 @@ class User implements UserInterface
         $this->events = new ArrayCollection();
         $this->participations = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->roles = ['ROLE_USER']; 
+
     }
 
     public function getId(): ?int
@@ -94,6 +120,7 @@ class User implements UserInterface
         return $this;
     }
 
+
     public function getPassword(): ?string
     {
         return $this->password;
@@ -105,6 +132,32 @@ class User implements UserInterface
 
         return $this;
     }
+
+
+    // public function getPassword(): ?string
+    // {
+    //     return $this->plainPassword;
+    // }
+
+    // public function setPassword(string $plainPassword): self
+    // {
+    //     $this->plainPassword = $plainPassword;
+
+    //     return $this;
+    // }
+
+    public function getConfirmPassword(): ?string
+    {
+        return $this->confirm_password;
+    }
+
+    public function setConfirmPassword(string $confirm_password): self
+    {
+        $this->confirm_password = $confirm_password;
+
+        return $this;
+    }
+
 
     public function getRoles(): ?array
     {

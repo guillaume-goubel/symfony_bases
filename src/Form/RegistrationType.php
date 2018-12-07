@@ -3,13 +3,13 @@
 namespace App\Form;
 
 use App\Entity\User;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-
-
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
 class RegistrationType extends AbstractType
 {
@@ -17,11 +17,10 @@ class RegistrationType extends AbstractType
     {
         $builder
             ->add('username')
-            ->add('email')
+            ->add('email', EmailType::class)      
+            // ->add('plainPassword') -> a rajouter pour le plainPassword
             ->add('password',PasswordType::class)
-            ->add('confirm_password', PasswordType::class)
-/*             ->add('roles') */
-        ;
+            ->add('confirm_password', PasswordType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

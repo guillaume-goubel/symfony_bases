@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{parent()}} Création {% endblock %}
+
+{% block body %}
+
+{% form_theme formType 'bootstrap_4_layout.html.twig' %}
+
+    {{ form_start(formType, {'attr': {'novalidate': 'novalidate'}}) }}
+
+<div id="form-create">
+
+    <div class="gauche">
+
+        <div class="form-group">
+            {{ form_label(formType.name , 'Nom') }}
+            {{ form_widget(formType.name) }}
+            {{ form_help(formType.name) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(formType.createdAt , 'Date de création') }}
+            {{ form_widget(formType.createdAt ) }}
+            {{ form_help(formType.createdAt ) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(formType.startAt , 'Date de début') }}
+            {{ form_widget(formType.startAt) }}
+            {{ form_help(formType.startAt) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(formType.endAt , 'Date de fin') }}
+            {{ form_widget(formType.endAt) }}
+            {{ form_help(formType.endAt) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(formType.content , 'Description') }}
+            {{ form_widget(formType.content) }}
+            {{ form_help(formType.content) }}
+        </div>
+    </div>
+
+    <div class="droite">
+
+        <div class="form-group">
+            {{ form_label(formType.price , 'Prix') }}
+            {{ form_widget(formType.price) }}
+            {{ form_help(formType.price) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(formType.place , 'Le lieu') }}
+            {{ form_widget(formType.place) }}
+            {{ form_help(formType.place) }}
+        </div> 
+        <div class="form-group">
+            {{ form_label(formType.posterUrl , "L'Url de l'image") }}
+            {{ form_widget(formType.posterUrl) }}
+            {{ form_help(formType.posterUrl) }}
+        </div> 
+
+        <div class="form-group">
+            {{ form_label(formType.posterFile , "L'upload de l'image") }}
+            {{ form_widget(formType.posterFile) }}
+            {{ form_help(formType.posterFile) }}
+        </div> 
+
+        <div class="form-group">
+            {{ form_label(formType.categories , 'La catégorie') }}
+            {{ form_widget(formType.categories) }}
+            {{ form_help(formType.categories) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(formType.owner , 'Le propriétaire de l\'évènement') }}
+            {{ form_widget(formType.owner) }}
+            {{ form_help(formType.owner) }}
+        </div>   
+        <input type="submit" class="btn btn-success" value="Create" />
+    </div>
+
+ </div>
+            {{ form_end(formType) }}
+
+        {% endblock %}

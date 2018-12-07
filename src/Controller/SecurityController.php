@@ -6,17 +6,50 @@ use App\Entity\User;
 use App\Form\FormType;
 use App\Form\RegistrationType;
 
+use App\Service\SecurityService;
+
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-
-
+use Symfony\Component\HttpFoundation\Request;
 
 class SecurityController extends AbstractController
 {
+    
     /**
-     * @Route("/login", name="user_login")
+     * @Route("user/registration", name="user_registration")
+     */
+    public function registration(Request $request, SecurityService $securityService){
+      
+        $user = new User();
+        /* $user->setRoles(['USER_ROLE']); */
+
+        $form = $this->createForm(RegistrationType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {    
+            $securityService->addUser($user);
+
+            //  Enregistrement dans le controller ->  
+            //  $em = $this->getDoctrine()->getManager();
+            //  $em->persist($user);
+            //  $em->flush(); 
+
+            return $this->redirectToRoute('events_create', [
+                'UserId' => $user->getId()
+            ]);
+        }
+
+        return $this->render('security/registration.html.twig' , [
+            'form' => $form->createView()
+        ]);
+
+    }
+
+    
+    /**
+     * @Route("user/login", name="user_login")
      */
     public function login(AuthenticationUtils $authenticationUtils)
     {
@@ -33,16 +66,13 @@ class SecurityController extends AbstractController
         ]);
     }
 
+
     /**
-     * @Route("/logout", name="app_logout")
+     * @Route("/logout", name="security_logout")
      */
     public function logout()
     {
-/*         // controller can be blank: it will never be executed!
-        throw new \Exception('Don\'t forget to activate logout in security.yaml'); */
 
-        return $this->render('main/home.html.twig', [
-        ]);
     }
 
 

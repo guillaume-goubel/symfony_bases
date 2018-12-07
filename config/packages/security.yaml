@@ -4,6 +4,11 @@ security:
             algorithm: bcrypt
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
 
+
+    role_hierarchy:
+        ROLE_PREMIUM: ROLE_USER
+        ROLE_ADMIN: ROLE_PREMIUM
+
     providers:
         in_memory : { memory: ~ }
         in_database:
@@ -20,16 +25,15 @@ security:
             #     authenticators:
             #         - App\Security\LoginTypeAuthenticator
             provider: in_database
-
             form_login:
+                # Route vers le formulaire login
                 login_path: user_login
                 check_path: user_login
-
             logout:
                 # La route où se trouve le process de deconnexion
                 path: security_logout
                 # La route sur laquelle doit etre rediriger l'utilisateur apres une deconnexion
-                target: index
+                target: home
 
             # activate different ways to authenticate
 
@@ -42,5 +46,6 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+         - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/security, roles: ROLE_USER }
+

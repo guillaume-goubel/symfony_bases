@@ -58,14 +58,18 @@ class EventService {
         return $repo->sortByDate();
     }
 
+
+    //CRUD
     public function add($event) {
     
-        // Gestion des owner effectuée dans le service (l'Id sera toujours 1 en base)
         $repo = $this->om->getRepository(User::class); 
-        $user = $repo->find(1);
         
+        // Gestion des owner effectuée dans le service (l'Id sera toujours 1 en base)
+        $user = $repo->find(1);
+        //Ajout du propriétaire à la main
         $event->setOwner($user);
 
+        //Vers la méthode d'ajout du poster
         $this->setupMedia( $event );
 
         // Faire persister et flusher

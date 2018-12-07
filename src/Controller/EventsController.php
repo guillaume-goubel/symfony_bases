@@ -58,12 +58,13 @@ class EventsController extends AbstractController
 
 
     /**
-     * @Route("/events/add", name="events_create")
+     * @Route("security/events/add", name="events_create")
      */
      public function create(EventService $eventService, Request $request)
      {
          $event = new Event();
          $formType = $this->createForm(FormType::class, $event);
+         // Intercepter les données envoyées en requete HTTP
          $formType->handleRequest($request);
  
          if ($formType->isSubmitted() && $formType->isValid()) {    
@@ -71,12 +72,11 @@ class EventsController extends AbstractController
              return $this->redirectToRoute('events_display', [ 'id' => $event->getId() ]);
          }
  
-          return $this->render('events/create.html.twig', [
+          return $this->render('security/create.html.twig', [
              'formType' => $formType->createView(),
          ]); 
      }
  
-
 
     /**
      * @Route("/events/list", name="events_list" )
@@ -111,5 +111,15 @@ class EventsController extends AbstractController
             'event' => $eventService->getOne($id)
         ]);
     }
+
+
+    /**
+     * @Route("/security/events/", name="events_join")
+     */
+     public function joinEvents()
+     {
+         return $this->render('events/join.html.twig', [         
+         ]);
+     }
 
 }
