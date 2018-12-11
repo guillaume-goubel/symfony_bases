@@ -144,15 +144,15 @@ class Event
         $this->participations = new ArrayCollection();
         $this->comments = new ArrayCollection();
         
-        $this->createdAt = new \DateTime();
+        // $this->createdAt = new \DateTime();
         
-        $this->startAt = new \DateTime();
-        $this->endAt = new \DateTime();
+        // $this->startAt = new \DateTime();
+        // $this->endAt = new \DateTime();
         
-        $this->name = 'yoyo';
-        $this->price = '10';
-        $this->content = 'yo';
-        $this->poster = 'yo';
+        // $this->name = 'yoyo';
+        // $this->price = '10';
+        // $this->content = 'yo';
+        // $this->poster = 'yo';
 
     }
 
@@ -269,16 +269,6 @@ class Event
         return $this;
     }
 
-
-
-
-
-
-
-
-
-
-
     public function getPlace(): ?Place
     {
         return $this->place;
@@ -290,6 +280,9 @@ class Event
 
         return $this;
     }
+
+
+
 
     /**
      * @return Collection|Category[]
@@ -317,6 +310,9 @@ class Event
         return $this;
     }
 
+
+
+
     public function getOwner(): ?User
     {
         return $this->owner;
@@ -329,6 +325,9 @@ class Event
         return $this;
     }
 
+   
+   
+   
     /**
      * @return Collection|Participation[]
      */

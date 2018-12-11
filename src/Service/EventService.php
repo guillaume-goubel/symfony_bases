@@ -33,7 +33,7 @@ class EventService {
         return null;
     } */
 
-    public function getOne ($id) {
+    public function getOne($id) {
         $repo = $this->om->getRepository(Event::class); 
         return $repo->find($id);
     }

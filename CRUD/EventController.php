@@ -23,6 +23,8 @@ class EventController extends AbstractController
         return $this->render('event/index.html.twig', ['events' => $eventRepository->findAll()]);
     }
 
+
+
     /**
      * @Route("/new", name="event_new", methods="GET|POST")
      */
@@ -46,6 +48,9 @@ class EventController extends AbstractController
         ]);
     }
 
+
+
+
     /**
      * @Route("/{id}", name="event_show", methods="GET")
      */
@@ -53,6 +58,8 @@ class EventController extends AbstractController
     {
         return $this->render('event/show.html.twig', ['event' => $event]);
     }
+
+
 
     /**
      * @Route("/{id}/edit", name="event_edit", methods="GET|POST")
@@ -73,6 +80,9 @@ class EventController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+
+
 
     /**
      * @Route("/{id}", name="event_delete", methods="DELETE")

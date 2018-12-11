@@ -33,6 +33,9 @@ class Category
      */
     private $events;
 
+
+
+    
     public function __construct()
     {
         $this->events = new ArrayCollection();
@@ -70,6 +73,7 @@ class Category
         return $this;
     }
 
+
     /**
      * @return Collection|Event[]
      */
@@ -87,6 +91,8 @@ class Category
 
         return $this;
     }
+
+
 
     public function removeEvent(Event $event): self
     {
